@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="6" :xs="24">
-        <inpatient-card :patient="patient" />
+        <inpatient-card :patient="patient" :change="changePatient" />
       </el-col>
     </el-row>
   </div>
@@ -18,22 +18,21 @@ export default {
   data() {
     return {
       patient: {
-        header: {
-          name: '',
-          patientNo: ''
-        },
-        base: {
-          cardNo: '',
-          sex: '',
-          telephone: '',
-          identityNo: '',
-          age: ''
-        },
-        hosp: {
-          department: '',
-          doctor: ''
-        }
+        patientNo: '',
+        cardNo: '',
+        name: '',
+        sex: '',
+        telephone: '',
+        identityNo: '',
+        age: '',
+        department: '',
+        doctor: ''
       }
+    }
+  },
+  methods: {
+    changePatient() {
+      this.$message('test')
     }
   }
 }

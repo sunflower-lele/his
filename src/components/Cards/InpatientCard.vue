@@ -2,6 +2,13 @@
   <el-card style="border-radius: 10px">
     <div slot="header" class="clearfix">
       <span>住院患者</span>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        style="margin-left: 10px"
+        circle
+        @click="change"
+      />
     </div>
 
     <div class="inpatient-profile">
@@ -13,10 +20,10 @@
       </div>
       <div class="box-center">
         <div class="inpatient-name text-center">
-          {{ patient.header.name }}
+          {{ patient.name }}
         </div>
         <div class="inpatient-code text-center text-muted">
-          {{ patient.header.patientNo }}
+          {{ patient.patientNo }}
         </div>
       </div>
     </div>
@@ -30,13 +37,14 @@
           <el-row :gutter="20">
             <el-col :span="12" :xs="24">
               <div class="text-muted">
-                <span>卡号: </span>{{ patient.base.cardNo }}
+                <span>卡号: </span>
+                {{ patient.cardNo }}
               </div>
             </el-col>
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>性别: </span>
-                {{ patient.base.sex }}
+                {{ patient.sex }}
               </div>
             </el-col>
           </el-row>
@@ -44,7 +52,7 @@
             <el-col :span="24" :xs="24">
               <div class="text-muted">
                 <span>联系电话: </span>
-                {{ patient.base.telephone }}
+                {{ patient.telephone }}
               </div>
             </el-col>
           </el-row>
@@ -52,7 +60,7 @@
             <el-col :span="24" :xs="24">
               <div class="text-muted">
                 <span>身份证号: </span>
-                {{ patient.base.identityNo }}
+                {{ patient.identityNo }}
               </div>
             </el-col>
           </el-row>
@@ -60,7 +68,7 @@
             <el-col :span="24" :xs="24">
               <div class="text-muted">
                 <span>年龄: </span>
-                {{ patient.base.age }}
+                {{ patient.age }}
               </div>
             </el-col>
           </el-row>
@@ -76,13 +84,13 @@
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>住院科室: </span>
-                {{ patient.hosp.department }}
+                {{ patient.department }}
               </div>
             </el-col>
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>主管医师: </span>
-                {{ patient.hosp.doctor }}
+                {{ patient.doctor }}
               </div>
             </el-col>
           </el-row>
@@ -99,27 +107,22 @@ export default {
       type: Object,
       default: () => {
         return {
-          header: {
-            name: '',
-            patientNo: ''
-          },
-          base: {
-            cardNo: '',
-            sex: '',
-            telephone: '',
-            identityNo: '',
-            age: ''
-          },
-          hosp: {
-            department: '',
-            doctor: ''
-          }
+          patientNo: '',
+          cardNo: '',
+          name: '',
+          sex: '',
+          telephone: '',
+          identityNo: '',
+          age: '',
+          department: '',
+          doctor: ''
         }
       }
+    },
+    change: {
+      type: Function,
+      default: null
     }
-  },
-  data() {
-    return {}
   }
 }
 </script>
