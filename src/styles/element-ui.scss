@@ -82,3 +82,118 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+// 提供侧边栏dialog 的样式能力
+.el-dialog.el-dialog-aside {
+  margin: 0 !important;
+  width: 550px;
+
+  position: fixed;
+  right: 0;
+  left: calc(100vw - 550px);
+  top: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  &.el-dialog-aside__small {
+    width: 450px;
+    left: calc(100vw - 450px);
+  }
+
+  &.el-dialog-aside__wide {
+    width: 600px;
+    left: calc(100vw - 600px);
+  }
+
+  &.el-dialog-aside__large {
+    width: 800px;
+    left: calc(100vw - 800px);
+  }
+
+  .el-form-item__label {
+    text-align: left;
+    width: 120px;
+  }
+
+  // 避免嵌套在section 中后被样式覆盖
+  .el-form-item__content .el-input {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  // 必填项的星号位移一下
+  .el-form-item {
+
+    &.is-required:not(.is-no-asterisk) .el-form-item__label-wrap>.el-form-item__label:before,
+    &.is-required:not(.is-no-asterisk)>.el-form-item__label:before {
+      margin-left: -8px;
+    }
+
+    .el-radio {
+      line-height: 32px;
+    }
+  }
+
+  .el-dialog__header {
+    height: 55px;
+    padding-left: 40px;
+  }
+
+  .el-dialog__body {
+    padding-top: 0;
+    overflow-y: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+    flex: 1;
+
+    .card {
+      border-top: 1px solid #E0E0E0;
+      //padding-top: 20px;
+      //padding-bottom: 1px;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin-left: -20px;
+      margin-right: -20px;
+      transition: all ease-in-out 200ms;
+      background-color: white;
+      &:hover {
+        background-color: #F2F2F4;
+      }
+    }
+  }
+
+  .el-dialog__footer {
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+
+    .el-button {
+      min-width: 90px;
+      height: 36px;
+      font-weight: normal;
+      font-size: 12px;
+    }
+  }
+
+  .tips {
+    border-top: 1px solid #f3f3f3;
+    padding-top: 10px;
+
+    li {
+      list-style: decimal;
+      margin-left: 20px;
+      font-size: 14px;
+      line-height: 26px;
+
+      li {
+        list-style: lower-alpha;
+        margin-left: 1em;
+      }
+    }
+  }
+}

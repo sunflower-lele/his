@@ -7,10 +7,13 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
+import medicalRouter from './modules/medical'
+import chargeRouter from './modules/charge'
+import userRouter from './modules/user'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -93,7 +96,8 @@ export const constantRoutes = [
         name: 'Documentation',
         meta: { title: 'Documentation', icon: 'documentation', affix: true }
       }
-    ]
+    ],
+    hidden: true
   },
   {
     path: '/guide',
@@ -106,7 +110,8 @@ export const constantRoutes = [
         name: 'Guide',
         meta: { title: 'Guide', icon: 'guide', noCache: true }
       }
-    ]
+    ],
+    hidden: true
   },
   {
     path: '/profile',
@@ -174,6 +179,9 @@ export const asyncRoutes = [
   {
     path: '/icon',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -185,8 +193,8 @@ export const asyncRoutes = [
   },
 
   /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
+  // componentsRouter,
+  // chartsRouter,
   nestedRouter,
   tableRouter,
 
@@ -197,7 +205,8 @@ export const asyncRoutes = [
     name: 'Example',
     meta: {
       title: 'Example',
-      icon: 'el-icon-s-help'
+      icon: 'el-icon-s-help',
+      roles: ['admin']
     },
     children: [
       {
@@ -225,6 +234,9 @@ export const asyncRoutes = [
   {
     path: '/tab',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -242,7 +254,8 @@ export const asyncRoutes = [
     name: 'ErrorPages',
     meta: {
       title: 'Error Pages',
-      icon: '404'
+      icon: '404',
+      roles: ['admin']
     },
     children: [
       {
@@ -268,7 +281,7 @@ export const asyncRoutes = [
         path: 'log',
         component: () => import('@/views/error-log/index'),
         name: 'ErrorLog',
-        meta: { title: 'Error Log', icon: 'bug' }
+        meta: { title: 'Error Log', icon: 'bug', roles: ['admin'] }
       }
     ]
   },
@@ -280,7 +293,8 @@ export const asyncRoutes = [
     name: 'Excel',
     meta: {
       title: 'Excel',
-      icon: 'excel'
+      icon: 'excel',
+      roles: ['admin']
     },
     children: [
       {
@@ -316,7 +330,7 @@ export const asyncRoutes = [
     redirect: '/zip/download',
     alwaysShow: true,
     name: 'Zip',
-    meta: { title: 'Zip', icon: 'zip' },
+    meta: { title: 'Zip', icon: 'zip', roles: ['admin'] },
     children: [
       {
         path: 'download',
@@ -331,6 +345,9 @@ export const asyncRoutes = [
     path: '/pdf',
     component: Layout,
     redirect: '/pdf/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -349,6 +366,9 @@ export const asyncRoutes = [
   {
     path: '/theme',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -359,29 +379,9 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/clipboard',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/clipboard/index'),
-        name: 'ClipboardDemo',
-        meta: { title: 'Clipboard', icon: 'clipboard' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
+  medicalRouter,
+  chargeRouter,
+  userRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
