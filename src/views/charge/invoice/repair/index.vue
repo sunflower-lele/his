@@ -69,7 +69,7 @@ export default {
           this.patient.name = data.name
           this.patient.sex = data.sex
           this.patient.telephone = data.tel
-          this.patient.identityNo = data.identityNo
+          this.patient.identityNo = data.idenNo
           this.patient.age = data.age
         })
       }).then(_ => {
