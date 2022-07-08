@@ -2,9 +2,25 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="6" :xs="24">
-        <inpatient-card :patient="patient" :change="changePatient" />
+        <inpatient-card :data="patient" @click="dialogVisible = true" />
       </el-col>
     </el-row>
+
+    <!-- 会话 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          确 定
+        </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -17,22 +33,16 @@ export default {
   },
   data() {
     return {
-      patient: {
-        patientNo: '',
-        cardNo: '',
-        name: '',
-        sex: '',
-        telephone: '',
-        identityNo: '',
-        age: '',
-        department: '',
-        doctor: ''
-      }
+      dialogVisible: false
     }
   },
   methods: {
-    changePatient() {
-      this.$message('test')
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => { })
     }
   }
 }

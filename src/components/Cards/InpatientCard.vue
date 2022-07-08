@@ -7,7 +7,7 @@
         size="mini"
         style="margin-left: 10px"
         circle
-        @click="change"
+        @click="click"
       />
     </div>
 
@@ -20,10 +20,10 @@
       </div>
       <div class="box-center">
         <div class="inpatient-name text-center">
-          {{ patient.name }}
+          {{ data.name }}
         </div>
         <div class="inpatient-code text-center text-muted">
-          {{ patient.patientNo }}
+          {{ data.patientNo }}
         </div>
       </div>
     </div>
@@ -38,13 +38,13 @@
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>卡号: </span>
-                {{ patient.cardNo }}
+                {{ data.cardNo }}
               </div>
             </el-col>
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>性别: </span>
-                {{ patient.sex }}
+                {{ data.sex }}
               </div>
             </el-col>
           </el-row>
@@ -52,7 +52,7 @@
             <el-col :span="24" :xs="24">
               <div class="text-muted">
                 <span>联系电话: </span>
-                {{ patient.telephone }}
+                {{ data.telephone }}
               </div>
             </el-col>
           </el-row>
@@ -60,7 +60,7 @@
             <el-col :span="24" :xs="24">
               <div class="text-muted">
                 <span>身份证号: </span>
-                {{ patient.identityNo }}
+                {{ data.identityNo }}
               </div>
             </el-col>
           </el-row>
@@ -68,7 +68,7 @@
             <el-col :span="24" :xs="24">
               <div class="text-muted">
                 <span>年龄: </span>
-                {{ patient.age }}
+                {{ data.age }}
               </div>
             </el-col>
           </el-row>
@@ -84,13 +84,13 @@
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>住院科室: </span>
-                {{ patient.department }}
+                {{ data.department }}
               </div>
             </el-col>
             <el-col :span="12" :xs="24">
               <div class="text-muted">
                 <span>主管医师: </span>
-                {{ patient.doctor }}
+                {{ data.doctor }}
               </div>
             </el-col>
           </el-row>
@@ -103,7 +103,7 @@
 <script>
 export default {
   props: {
-    patient: {
+    data: {
       type: Object,
       default: () => {
         return {
@@ -118,10 +118,11 @@ export default {
           doctor: ''
         }
       }
-    },
-    change: {
-      type: Function,
-      default: null
+    }
+  },
+  methods: {
+    click() {
+      this.$emit('click')
     }
   }
 }
