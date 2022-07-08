@@ -1,3 +1,13 @@
 .el-table--striped .el-table__body tr.el-table__row--striped td {
-    background: #effbff
+  background: #effbff
+}
+
+.el-table {
+  .success-row {
+    background: #f0f9eb;
+  }
+
+  .warning-row {
+    background: oldlace;
+  }
 }

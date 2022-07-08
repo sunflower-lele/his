@@ -4,6 +4,10 @@
       <el-col :span="6" :xs="24">
         <inpatient-card :data="patient" @click="dialogVisible = true" />
       </el-col>
+
+      <el-col :span="18" :xs="24">
+        <prepay-data-table />
+      </el-col>
     </el-row>
 
     <!-- 会话 -->
@@ -24,22 +28,58 @@
 
 <script>
 import InpatientCard from '@/components/Cards/InpatientCard.vue'
+import PrepayDataTable from './components/PrepayDataTable.vue'
+
+import { getInpatientInfo, getPatientInfo } from '@/api/patient'
+import { getDeptInfo } from '@/api/department'
 
 export default {
   components: {
-    InpatientCard
+    InpatientCard,
+    PrepayDataTable
   },
   data() {
     return {
-      patient: {},
+      patient: {
+        patientNo: '',
+        cardNo: '',
+        name: '',
+        sex: '',
+        telephone: '',
+        identityNo: '',
+        age: '',
+        department: '',
+        doctor: ''
+      },
       dialogVisible: false,
       dialogResult: ''
     }
   },
   methods: {
     handleDialogConfirm() {
-      this.$message('000' + this.dialogResult)
-      this.dialogVisible = false
+      getInpatientInfo('000' + this.dialogResult).then((Response) => {
+        const { data } = Response
+        this.patient.patientNo = data.patientNo
+        this.patient.cardNo = data.cardNo
+        this.patient.department = data.deptCode
+        this.patient.doctor = data.docCode
+      }).then(_ => {
+        getPatientInfo(this.patient.cardNo).then(Response => {
+          const { data } = Response
+          this.patient.name = data.name
+          this.patient.sex = data.sex
+          this.patient.telephone = data.tel
+          this.patient.identityNo = data.identityNo
+          this.patient.age = data.age
+        })
+      }).then(_ => {
+        getDeptInfo(this.patient.department).then(Response => {
+          const { data } = Response
+          this.patient.department = data.deptName
+        })
+      }).then(_ => {
+        this.dialogVisible = false
+      })
     }
   }
 }

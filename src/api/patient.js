@@ -1,9 +1,21 @@
 import request from '@/utils/request'
 
-export function getDictionary() {
+export function getInpatientInfo(patientNo) {
   return request({
-    url: '/api/inpatient/surgery/dictionary/getDictionary',
+    url: '/api/inpatient/queryInpatientInfo',
     method: 'post',
-    data: {}
+    data: {
+      patientNo: patientNo
+    }
+  })
+}
+
+export function getPatientInfo(cardNo) {
+  return request({
+    url: '/api/common/patient/queryPatientInfo',
+    method: 'post',
+    data: {
+      cardNo: cardNo
+    }
   })
 }
