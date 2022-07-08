@@ -11,19 +11,19 @@ const userRouter = {
   component: Layout,
   children: [
     {
-      path: 'escort',
+      path: 'role',
       meta: { title: '角色管理', icon: 'dashboard' },
       component: () => import('@/views/user/role/index')
     },
     {
-      path: 'invoice',
+      path: 'baseinfo',
       meta: { title: '用户管理', icon: 'dashboard' },
       component: () => import('@/views/user/baseinfo/index')
     },
     {
-      path: 'invoice',
+      path: 'permission',
       meta: { title: '权限管理', icon: 'dashboard' },
-      component: () => import('@/views/user/role/index')
+      component: () => import('@/views/user/permission/index')
     }
   ]
 }
