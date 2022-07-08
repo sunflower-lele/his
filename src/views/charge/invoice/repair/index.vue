@@ -7,16 +7,14 @@
     </el-row>
 
     <!-- 会话 -->
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <span>这是一段信息</span>
+    <el-dialog title="输入住院号" :visible.sync="dialogVisible" width="30%">
+      <div style="margin-left: 80px; margin-right: 80px">
+        <el-input v-model="dialogResult" placeholder="请输入住院号">
+          <template slot="prepend">ZY01000</template>
+        </el-input>
+      </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">
+        <el-button type="primary" @click="handleDialogConfirm">
           确 定
         </el-button>
       </span>
@@ -33,16 +31,15 @@ export default {
   },
   data() {
     return {
-      dialogVisible: false
+      patient: {},
+      dialogVisible: false,
+      dialogResult: ''
     }
   },
   methods: {
-    handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => { })
+    handleDialogConfirm() {
+      this.$message('000' + this.dialogResult)
+      this.dialogVisible = false
     }
   }
 }
