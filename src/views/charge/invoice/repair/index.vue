@@ -6,7 +6,7 @@
       </el-col>
 
       <el-col :span="18" :xs="24">
-        <prepay-data-table />
+        <prepay-data-table ref="dataTable" :patient="patient.patientNo" />
       </el-col>
     </el-row>
 
@@ -78,6 +78,7 @@ export default {
           this.patient.department = data.deptName
         })
       }).then(_ => {
+        this.$refs.dataTable.refresh()
         this.dialogVisible = false
       })
     }

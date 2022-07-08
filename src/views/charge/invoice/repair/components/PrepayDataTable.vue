@@ -3,7 +3,7 @@
     <div slot="header" class="clearfix">
       <span>预交金电子票</span>
       <el-button
-        icon="el-icon-refresh"
+        icon="el-icon-magic-stick"
         size="mini"
         style="margin-left: 10px"
         circle
@@ -16,10 +16,9 @@
       :data="tableData"
       height="700px"
       :row-class-name="tableRowClassName"
-      stripe
     >
-      <el-table-column prop="recipeNo" label="预交金票据号" width="180" />
-      <el-table-column prop="billBatchCode" label="电子票据代码" width="180" />
+      <el-table-column prop="receiptNo" label="预交金票据号" width="180" />
+      <el-table-column prop="billBatchNo" label="电子票据代码" width="180" />
       <el-table-column prop="billNo" label="电子票据号码" width="180" />
       <el-table-column prop="random" label="电子校验码" />
     </el-table>
@@ -27,9 +26,11 @@
 </template>
 
 <script>
+import { getPrepayInfo, fixPrepayInfo } from '@/api/prepay'
+
 export default {
   props: {
-    patientNo: {
+    patient: {
       type: String,
       default: _ => { return '' }
     }
@@ -39,12 +40,9 @@ export default {
       tableData: []
     }
   },
-  created() {
-    this.refreshData()
-  },
   methods: {
     tableRowClassName({ row, rowIndex }) {
-      if (row.billBatchCode === undefined || row.billBatchCode === null || row.billBatchCode === '') {
+      if (row.billBatchNo === undefined || row.billBatchNo === null || row.billBatchNo === '') {
         return 'warning-row'
       } else if (row.billNo === undefined || row.billNo === null || row.billNo === '') {
         return 'warning-row'
@@ -54,18 +52,19 @@ export default {
         return 'success-row'
       }
     },
-    refreshData() {
-      this.tableData = [
-        {
-          recipeNo: '1',
-          billBatchCode: '2',
-          billNo: '3',
-          random: '4'
-        }
-      ]
+    refresh() {
+      getPrepayInfo(this.patient).then(Response => {
+        const { data } = Response
+        this.tableData = data
+      })
     },
     repair() {
-      this.refreshData()
+      this.tableData.forEach(item => {
+        if (item.billBatchNo === undefined || item.billBatchNo === null || item.billBatchNo === '') {
+          fixPrepayInfo(item.receiptNo)
+        }
+      })
+      this.refresh()
     }
   }
 }
