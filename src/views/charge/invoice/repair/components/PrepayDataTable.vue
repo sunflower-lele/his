@@ -6,9 +6,11 @@
         icon="el-icon-magic-stick"
         size="mini"
         style="margin-left: 10px"
-        circle
+        type="success"
         @click="repair"
-      />
+      >
+        一键修复
+      </el-button>
     </div>
 
     <!-- 数据表 -->

@@ -5,6 +5,7 @@
       <el-button
         icon="el-icon-refresh"
         size="mini"
+        type="info"
         style="margin-left: 10px"
         circle
         @click="click"
@@ -13,10 +14,7 @@
 
     <div class="inpatient-profile">
       <div class="box-center">
-        <el-avatar
-          :size="80"
-          src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-        />
+        <el-avatar :size="80">{{ data.name }}</el-avatar>
       </div>
       <div class="box-center">
         <div class="inpatient-name text-center">
