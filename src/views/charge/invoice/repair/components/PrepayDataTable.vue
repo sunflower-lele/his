@@ -61,12 +61,18 @@ export default {
       })
     },
     repair() {
+      const funs = []
+
       this.tableData.forEach(item => {
         if (item.billBatchNo === undefined || item.billBatchNo === null || item.billBatchNo === '') {
-          fixPrepayInfo(item.receiptNo)
+          funs.push(fixPrepayInfo(item.receiptNo))
         }
       })
-      this.refresh()
+
+      Promise.all(funs).then(_ => {
+        this.$message({ message: '修复完成', center: true, type: 'success' })
+        this.refresh()
+      })
     }
   }
 }

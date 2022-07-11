@@ -2,17 +2,12 @@
   <el-card style="border-radius: 10px">
     <el-table :data="data" height="540px" stripe>
       <el-table-column type="index" label="序号" width="50" fixed />
-      <el-table-column prop="receiptNo" label="预交金票据号" width="180" />
-      <el-table-column prop="billBatchNo" label="电子票据代码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="billNo" label="电子票据号码" width="180" />
-      <el-table-column prop="random" label="电子校验码" />
+      <el-table-column prop="inDate" label="入手术室时间" width="160" />
+      <el-table-column prop="roomNo" label="手术室号" width="90" />
+      <el-table-column prop="surgeryName" label="手术名" width="360" />
+      <el-table-column prop="level" label="手术等级" width="90" />
+      <el-table-column prop="patientNo" label="住院号" width="150" />
+      <el-table-column prop="name" label="患者姓名" width="150" />
     </el-table>
     <el-form class="tail" label-width="80px" :inline="true">
       <el-form-item label="总数量" prop="date">{{ data.length }}</el-form-item>

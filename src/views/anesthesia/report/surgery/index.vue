@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="24" :xs="24">
-        <control-panel @click="test" />
+        <control-panel ref="config" @click="onQuery" />
       </el-col>
     </el-row>
 
@@ -20,6 +20,8 @@
 import ControlPanel from './components/ControlPanel.vue'
 import DataTable from './components/DataTable.vue'
 
+import { querySurgeryInfos } from '@/api/surgery'
+
 export default {
   components: {
     ControlPanel,
@@ -31,7 +33,14 @@ export default {
     }
   },
   methods: {
-    test() {
+    onQuery() {
+      querySurgeryInfos({
+        beginInDateTime: this.$refs.config.form.date[0],
+        endInDateTime: this.$refs.config.form.date[1]
+      }).then(Response => {
+        const { data } = Response
+        this.tableData = data
+      })
     }
   }
 }
