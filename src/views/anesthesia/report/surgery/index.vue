@@ -10,7 +10,7 @@
 
     <el-row :gutter="20">
       <el-col :span="24" :xs="24">
-        <data-table :data="tableData" />
+        <data-table ref="window" :data="tableData" />
       </el-col>
     </el-row>
   </div>
@@ -34,12 +34,18 @@ export default {
   },
   methods: {
     onQuery() {
+      this.$refs.window.loading = true
       querySurgeryInfos({
         beginInDateTime: this.$refs.config.form.date[0],
-        endInDateTime: this.$refs.config.form.date[1]
+        endInDateTime: this.$refs.config.form.date[1],
+        patientNo: this.$refs.config.form.patientNo ? this.$refs.config.form.patientNo : null,
+        levels: this.$refs.config.form.level.length > 0 ? this.$refs.config.form.level : null,
+        stayedDeptCodes: this.$refs.config.form.dept.length > 0 ? this.$refs.config.form.dept : null,
+        asaGrades: this.$refs.config.form.asaGrade.length > 0 ? this.$refs.config.form.asaGrade : null
       }).then(Response => {
         const { data } = Response
         this.tableData = data
+        this.$refs.window.loading = false
       })
     }
   }

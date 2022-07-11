@@ -56,12 +56,28 @@
         <el-cascader
           v-model="form.dept"
           :options="option.dept"
+          multiple
           placeholder="请选择住院科室"
           :props="props"
           clearable
           filterable
           style="width: 690px"
         />
+      </el-form-item>
+      <!-- 条件：手术等级 -->
+      <el-form-item label="ASA分级">
+        <el-select
+          v-model="form.asaGrade"
+          multiple
+          placeholder="请选择ASA分级"
+        >
+          <el-option
+            v-for="item in option.asaGrade"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
     </el-form>
   </el-card>
@@ -76,8 +92,9 @@ export default {
       form: {
         date: '',
         patientNo: '',
-        level: '',
-        dept: ''
+        level: [],
+        dept: [],
+        asaGrade: []
       },
       rules: {
         date: [
@@ -118,6 +135,32 @@ export default {
             value: '东津院区',
             label: '东津院区',
             children: []
+          }
+        ],
+        asaGrade: [
+          {
+            value: 'I',
+            label: 'I'
+          },
+          {
+            value: 'II',
+            label: 'II'
+          },
+          {
+            value: 'III',
+            label: 'III'
+          },
+          {
+            value: 'IV',
+            label: 'IV'
+          },
+          {
+            value: 'V',
+            label: 'V'
+          },
+          {
+            value: 'VI',
+            label: 'VI'
           }
         ]
       },

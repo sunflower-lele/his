@@ -1,5 +1,9 @@
 .el-table--striped .el-table__body tr.el-table__row--striped td {
-  background: #effbff
+  background: #f0f9eb;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td {
+  background: #add8e6;
 }
 
 .el-table {
@@ -9,5 +13,9 @@
 
   .warning-row {
     background: oldlace;
+  }
+
+  .el-table__body tr.current-row>td {
+    background: #add8e6;
   }
 }
