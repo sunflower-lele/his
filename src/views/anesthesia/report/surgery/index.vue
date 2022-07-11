@@ -35,12 +35,17 @@ export default {
   methods: {
     onQuery() {
       this.$refs.window.loading = true
+      // 转换多级选择器
+      const depts = []
+      this.$refs.config.form.dept.forEach(item => {
+        depts.push(item.slice(-1)[0])
+      })
       querySurgeryInfos({
         beginInDateTime: this.$refs.config.form.date[0],
         endInDateTime: this.$refs.config.form.date[1],
         patientNo: this.$refs.config.form.patientNo ? this.$refs.config.form.patientNo : null,
         levels: this.$refs.config.form.level.length > 0 ? this.$refs.config.form.level : null,
-        stayedDeptCodes: this.$refs.config.form.dept.length > 0 ? this.$refs.config.form.dept : null,
+        stayedDeptCodes: depts.length > 0 ? depts : null,
         asaGrades: this.$refs.config.form.asaGrade.length > 0 ? this.$refs.config.form.asaGrade : null
       }).then(Response => {
         const { data } = Response
