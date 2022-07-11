@@ -2,14 +2,14 @@ import request from '@/utils/request'
 
 export function getRoles() {
   return request({
-    url: '/api/inpatient/escort/queryHelperInfo',
+    url: '/api',
     method: 'get'
   })
 }
 
 export function addRole(data) {
   return request({
-    url: '/api/inpatient/escort/queryHelperInfo',
+    url: '/api',
     method: 'post',
     data
   })
@@ -17,7 +17,7 @@ export function addRole(data) {
 
 export function updateRole(id, data) {
   return request({
-    url: '/api/inpatient/escort/queryHelperInfo',
+    url: '/api',
     method: 'post',
     data: {
       id: id,
@@ -28,7 +28,7 @@ export function updateRole(id, data) {
 
 export function deleteRole(id) {
   return request({
-    url: '/api/inpatient/escort/queryHelperInfo',
+    url: '/api',
     method: 'delete'
   })
 }

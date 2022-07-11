@@ -61,11 +61,11 @@ export default {
   data() {
     return {
       rolesList: [{
-        key: '1011',
+        key: 'medical',
         rolename: '药学部',
         description: '描述'
       }, {
-        key: '1012',
+        key: 'pacs',
         rolename: '影像部',
         description: '描述'
       }],

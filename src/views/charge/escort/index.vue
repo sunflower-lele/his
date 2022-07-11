@@ -3,7 +3,7 @@
     <el-card class="el-card-panel">
       <div class="filter-container">
         <el-input
-          v-model="cardno"
+          v-model="cardNo"
           placeholder="请输入患者就诊卡号"
           style="width: 200px"
         />
@@ -19,10 +19,8 @@
         <el-table-column label="姓名" width="90" prop="name" />
         <el-table-column label="性别" width="60" prop="sex" />
         <el-table-column label="年龄" width="80" prop="age" />
-        <el-table-column label="身份证号" width="160" prop="ideno" />
-        <el-table-column label="电话号码" prop="phone" />
-        <el-table-column label="电子邮箱" width="140" prop="email" />
-        <el-table-column label="GCP患者" width="80" prop="gcp" />
+        <el-table-column label="身份证号" width="160" prop="idenNo" />
+        <el-table-column label="电话号码" prop="tel" />
         <el-table-column align="center" width="340" label="操作" prop="action">
           <template>
             <el-button
@@ -39,13 +37,12 @@
       <el-dialog :visible.sync="peihuVisable" custom-class="el-dialog-aside">
         <div v-if="flag">
           <div
-            v-for="i in list"
-            :key="i"
+            v-for="(dataForm, key) in datas"
+            :key="key"
             class="peihu"
             style="border: 2px solid #cfcfcf; margin-bottom: 20px"
           >
             <el-form
-              ref="dataForm"
               label-position="left"
               label-width="100px"
               style="width: 300px; margin-left: 20px; margin-top: 20px"
@@ -103,12 +100,12 @@
 
 <script>
 // import { MessageBox } from 'element-ui';
-import { escortList, escortBind, escortUpdateState } from '@/api/escort'
+import { escortList, escortBind, escortUpdateState, getHelperInfo } from '@/api/escort'
 
 export default {
   data() {
     return {
-      cardno: null,
+      cardNo: null,
       peihuno: null,
       peihucardno: null,
       peihname: null,
@@ -117,12 +114,12 @@ export default {
       tableData: null,
       list: [1, 2],
       peihuVisable: false,
-      dataForm: {
+      datas: [{
         escortNo: '',
         name: '',
         age: '',
         sex: ''
-      },
+      }],
       flag: true
     }
   },
@@ -135,9 +132,9 @@ export default {
   methods: {
     // 获取后端接口数据
     search() {
-      escortList(this.cardno).then((Response) => {
+      escortList(this.cardNo).then((Response) => {
         const { data } = Response
-        this.tableData = data
+        this.tableData = [data]
       })
     },
     handleAdd() {
@@ -147,7 +144,7 @@ export default {
         type: 'warning',
         center: true
       }).then(({ value }) => {
-        escortBind(this.cardno, value).then((Response) => {
+        escortBind(this.cardNo, value).then((Response) => {
           this.$messag({
             type: 'success',
             message: '绑定成功'
@@ -157,9 +154,9 @@ export default {
     },
     handleDialog() {
       this.peihuVisable = true
-      escortList(this.cardno).then((Response) => {
+      getHelperInfo(this.cardNo).then((Response) => {
         const { data } = Response
-        this.dataForm.escortNo = data.escortNo
+        this.datas = data
       })
     },
     logout() {
@@ -168,7 +165,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        escortUpdateState(this.cardno, 4).then((Response) => {
+        escortUpdateState(this.cardNo, 4).then((Response) => {
 
         })
         this.$message({

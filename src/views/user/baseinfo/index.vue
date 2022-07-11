@@ -4,50 +4,30 @@
     <el-table :data="rolesList" style="width: 100%; margin-top: 30px">
       <el-table-column align="center" label="用户代码" width="220">
         <template slot-scope="scope">
-          {{ scope.row.key }}
+          {{ scope.row.usercode }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用户名称" width="220">
+      <el-table-column align="center" label="角色代码" width="220">
         <template slot-scope="scope">
           {{ scope.row.rolename }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="身份证号">
-        <template slot-scope="scope">
-          {{ scope.row.ideno }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="出生日期">
-        <template slot-scope="scope">
-          {{ scope.row.birthday }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="性别">
-        <template slot-scope="scope">
-          {{ scope.row.sex }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="邮箱">
-        <template slot-scope="scope">
-          {{ scope.row.email }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="联系电话">
-        <template slot-scope="scope">
-          {{ scope.row.phone }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="头像">
-        <template slot-scope="scope">
-          {{ scope.row.image }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" size="small" @click="handleEdit(scope)">
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            size="small"
+            @click="handleEdit(scope)"
+          >
             编辑
           </el-button>
-          <el-button type="danger" icon="el-icon-delete" size="small" @click="handleDelete(scope)">
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="small"
+            @click="handleDelete(scope)"
+          >
             删除
           </el-button>
         </template>
@@ -55,25 +35,50 @@
     </el-table>
 
     <el-dialog
-      :title="dialogType === 'isnew' ? '新建角色' : '编辑角色'"
+      :title="dialogType === 'isnew' ? '新建用户' : '编辑用户'"
       :visible.sync="dialogFormVisible"
-      width="30%"
+      width="50%"
     >
-      <el-form :model="form" :label-position="labelPosition" label-width="80px">
+      <el-form
+        :model="form"
+        :label-position="labelPosition"
+        :inline="true"
+        label-width="80px"
+      >
         <el-form-item label="角色代码">
           <el-input v-model="form.code" autocomplete="off" />
         </el-form-item>
         <el-form-item label="角色名称">
           <el-input v-model="form.name" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="角色描述">
+        <el-form-item label="身份证号">
           <el-input v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="出生日期">
+          <el-date-picker v-model="form.date" type="date" style="width: 100%;" />
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-input v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="联系电话">
+          <el-input v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="头像">
+          <el-input v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="form.region" placeholder="请选择">
+            <el-option label="medical" value="shanghai" />
+            <el-option label="charge" value="beijing" />
+          </el-select>
         </el-form-item>
       </el-form>
       <div style="text-align: right">
         <el-button type="danger" @click="cancelVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmRoleinfo">确认
-        </el-button>
+        <el-button type="primary" @click="confirmRoleinfo">确认 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -86,16 +91,14 @@ export default {
   data() {
     return {
       rolesList: [{
-        key: '1011',
-        rolename: '药学部',
-        description: '描述'
+        usercode: '1011',
+        rolename: 'medical'
       }, {
-        key: '1012',
-        rolename: '影像部',
-        description: '描述'
+        usercode: '1012',
+        rolename: 'pacs'
       }],
       dialogType: 'new',
-      labelPosition: 'left',
+      labelPosition: 'right',
       dialogFormVisible: false,
       cancelVisible: false,
       form: {
