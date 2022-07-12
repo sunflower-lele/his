@@ -12,7 +12,8 @@
           type="primary"
           icon="el-icon-search"
           @click="search()"
-        >查询</el-button>
+        >查询
+        </el-button>
       </div>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="就诊卡号" prop="cardNo" />
@@ -26,16 +27,18 @@
             <el-button
               type="primary"
               @click="handleAdd()"
-            >绑定陪护人</el-button>
+            >绑定陪护人
+            </el-button>
             <el-button
               type="success"
               @click="handleDialog"
-            >查看陪护人</el-button>
+            >查看陪护人
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-dialog :visible.sync="peihuVisable" custom-class="el-dialog-aside">
-        <div v-if="flag">
+        <div v-if="key">
           <div
             v-for="(dataForm, key) in datas"
             :key="key"
@@ -92,7 +95,7 @@
             </el-button>
           </div>
         </div>
-        <h2 v-else style="">无陪护人信息</h2>
+        <h2 v-else style="">暂无陪护人信息</h2>
       </el-dialog>
     </el-card>
   </div>
@@ -112,7 +115,6 @@ export default {
       peihusex: null,
       peihuage: null,
       tableData: null,
-      list: [1, 2],
       peihuVisable: false,
       datas: [{
         escortNo: '',
@@ -145,7 +147,7 @@ export default {
         center: true
       }).then(({ value }) => {
         escortBind(this.cardNo, value).then((Response) => {
-          this.$messag({
+          this.$message({
             type: 'success',
             message: '绑定成功'
           })
@@ -157,6 +159,7 @@ export default {
       getHelperInfo(this.cardNo).then((Response) => {
         const { data } = Response
         this.datas = data
+        this.peihuno = data[0].escortNo
       })
     },
     logout() {
@@ -165,12 +168,11 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        escortUpdateState(this.cardNo, 4).then((Response) => {
-
-        })
-        this.$message({
-          type: 'success',
-          message: '注销成功!'
+        escortUpdateState(this.peihuno, 4).then(() => {
+          this.$message({
+            type: 'success',
+            message: '注销成功!'
+          })
         })
       })
     }
