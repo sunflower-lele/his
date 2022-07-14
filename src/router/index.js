@@ -14,6 +14,7 @@ import nestedRouter from './modules/nested'
 import medicalRouter from './modules/medical'
 import chargeRouter from './modules/charge'
 import userRouter from './modules/user'
+import anesthesiaRouter from './modules/anesthesia'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -382,6 +383,7 @@ export const asyncRoutes = [
   medicalRouter,
   chargeRouter,
   userRouter,
+  anesthesiaRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

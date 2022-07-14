@@ -12,26 +12,28 @@ const chargeRouter = {
   children: [
     {
       path: 'invoice',
-      meta: { title: '发票业务', icon: 'nested' },
+      meta: { title: '发票', icon: 'nested' },
       alwaysShow: true,
       component: () => import('@/views/charge/invoice/index'),
       children: [
         {
           path: 'repair',
-          meta: { title: '结算票修复', icon: 'el-icon-document' },
+          meta: { title: '结算电子票修复', icon: 'el-icon-document' },
           component: () => import('@/views/charge/invoice/repair/index')
         },
         {
           path: 'invoice',
           meta: { title: '电子发票', icon: 'documentation' },
-          component: () => import('@/views/charge/invoice/invoice/index')
+          component: () => import('@/views/charge/invoice/invoice/index'),
+          hidden: true
         }
       ]
     },
     {
       path: 'escort',
-      meta: { title: '电子陪护', icon: 'documentation' },
+      meta: { title: '陪护', icon: 'documentation' },
       component: () => import('@/views/charge/escort/index')
+      // hidden: true
     },
     {
       path: 'backno',

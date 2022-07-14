@@ -43,3 +43,11 @@ export function removeDictionary(icdCode) {
     }
   })
 }
+
+export function querySurgeryInfos(data) {
+  return request({
+    url: '/api/inpatient/surgery/querySurgeryInfos',
+    method: 'post',
+    data
+  })
+}
