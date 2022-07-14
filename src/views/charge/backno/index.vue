@@ -1,91 +1,81 @@
 <template>
-  <div class="app-container">
-    <el-card class="el-card-panel">
-      <div class="filter-container">
-        <label style="margin-left: 20px">发票号</label>
-        <el-input v-model="invoice" placeholder="请输入患者发票号" style="width: 200px;margin-left: 20px" />
-        <el-button style="margin-left: 40px;" type="primary" icon="el-icon-search">{{ '查询' }}</el-button>
+  <div>
+    <el-row :gutter="20">
+      <el-col :span="6" :xs="24">
+        <inpatient-card :data="patient" @click="dialogVisible = true" />
+      </el-col>
+    </el-row>
+
+    <!-- 会话 -->
+    <el-dialog title="输入住院号" :visible.sync="dialogVisible" width="30%">
+      <div style="margin-left: 80px; margin-right: 80px">
+        <el-input v-model="dialogResult" placeholder="请输入住院号">
+          <template slot="prepend">ZY01000</template>
+        </el-input>
       </div>
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-      >
-        <el-table-column label="就诊卡号" prop="cardno" />
-        <el-table-column label="姓名" prop="name" />
-        <el-table-column label="发票号" prop="invoice" />
-        <el-table-column label="金额" prop="money" />
-        <el-table-column label="发票类型" prop="invoice_type" />
-        <el-table-column align="center" width="360" label="操作" prop="action">
-          <template>
-            <el-button type="primary" @click="handleUpdate">{{ '更新打印标记' }}</el-button>
-            <el-button type="success" @click="fillOpen">{{ '补开' }}</el-button>
-            <el-button type="danger" @click="handleRush">{{ '冲红' }}</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleDialogConfirm">
+          确 定
+        </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import InpatientCard from '@/components/Cards/InpatientCard.vue'
+
+import { getInpatientInfo, getPatientInfo } from '@/api/patient'
+import { getDeptInfo } from '@/api/department'
+
 export default {
+  components: {
+    InpatientCard
+  },
   data() {
     return {
-      cardno: null,
-      name: null,
-      invoice: null,
-      money: null,
-      invoice_type: null,
-      tableData: [{
-        cardno: '201211111',
-        name: '王小虎',
-        invoice: '1212121212121212',
-        money: '180.23',
-        invoice_type: '门诊收费'
-      }]
+      patient: {
+        patientNo: '',
+        cardNo: '',
+        name: '',
+        sex: '',
+        telephone: '',
+        identityNo: '',
+        age: '',
+        department: '',
+        doctor: ''
+      },
+      dialogVisible: false,
+      dialogResult: ''
     }
   },
   methods: {
-    handleUpdate() {
-      this.$confirm('确认更新打印标记, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '更新成功!'
+    handleDialogConfirm() {
+      getInpatientInfo('000' + this.dialogResult).then((Response) => {
+        const { data } = Response
+        this.patient.patientNo = data.patientNo
+        this.patient.cardNo = data.cardNo
+        this.patient.department = data.deptCode
+        this.patient.doctor = data.docCode
+      }).then(_ => {
+        getPatientInfo(this.patient.cardNo).then(Response => {
+          const { data } = Response
+          this.patient.name = data.name
+          this.patient.sex = data.sex
+          this.patient.telephone = data.tel
+          this.patient.identityNo = data.idenNo
+          this.patient.age = data.age
         })
-      })
-    },
-    handleRush() {
-      this.$confirm('确认冲红电子发票, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '冲红成功!'
+      }).then(_ => {
+        getDeptInfo(this.patient.department).then(Response => {
+          const { data } = Response
+          this.patient.department = data.deptName
         })
-      })
-    },
-    fillOpen() {
-      this.$confirm('确认补开电子发票, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '补开成功!'
-        })
+      }).then(_ => {
+        this.$refs.dataTable.refresh()
+        this.dialogVisible = false
       })
     }
   }
 }
 </script>
-
-<style>
-
-</style>
