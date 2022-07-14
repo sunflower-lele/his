@@ -32,6 +32,11 @@ const chargeRouter = {
       path: 'escort',
       meta: { title: '电子陪护', icon: 'documentation' },
       component: () => import('@/views/charge/escort/index')
+    },
+    {
+      path: 'backno',
+      meta: { title: '特殊患者退号', icon: 'documentation' },
+      component: () => import('@/views/charge/backno/index')
     }
   ]
 }
