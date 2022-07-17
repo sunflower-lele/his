@@ -53,24 +53,27 @@
       </el-form-item>
       <!-- 条件：住院科室 -->
       <el-form-item label="住院科室">
-        <el-cascader
+        <el-select
           v-model="form.dept"
-          :options="option.dept"
           multiple
-          placeholder="请选择住院科室"
-          :props="props"
-          clearable
           filterable
-          style="width: 690px"
-        />
+          remote
+          reserve-keyword
+          placeholder="请输入科室"
+          :remote-method="remoteMethod"
+          :loading="loading"
+        >
+          <el-option
+            v-for="item in option.dept"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <!-- 条件：手术等级 -->
       <el-form-item label="ASA分级">
-        <el-select
-          v-model="form.asaGrade"
-          multiple
-          placeholder="请选择ASA分级"
-        >
+        <el-select v-model="form.asaGrade" multiple placeholder="请选择ASA分级">
           <el-option
             v-for="item in option.asaGrade"
             :key="item.value"
@@ -120,23 +123,7 @@ export default {
             label: '四级'
           }
         ],
-        dept: [
-          {
-            value: '南院区',
-            label: '南院区',
-            children: []
-          },
-          {
-            value: '北院区',
-            label: '北院区',
-            children: []
-          },
-          {
-            value: '东津院区',
-            label: '东津院区',
-            children: []
-          }
-        ],
+        dept: [],
         asaGrade: [
           {
             value: 'I',
@@ -169,35 +156,25 @@ export default {
       }
     }
   },
-  mounted() {
-    // 初始化科室选项
-    getDeptsInfo({ deptOwn: '南院区' }).then(Response => {
-      const { data } = Response
-      data.forEach(item => {
-        this.option.dept[0].children.push({ value: item.deptCode, label: item.deptName })
-      })
-    }).then(
-      getDeptsInfo({ deptOwn: '北院区' }).then(Response => {
-        const { data } = Response
-        data.forEach(item => {
-          this.option.dept[1].children.push({ value: item.deptCode, label: item.deptName })
-        })
-      })
-    ).then(
-      getDeptsInfo({ deptOwn: '东津院区' }).then(Response => {
-        const { data } = Response
-        data.forEach(item => {
-          this.option.dept[2].children.push({ value: item.deptCode, label: item.deptName })
-        })
-      })
-    )
-  },
   methods: {
     clickMethod(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.$emit('click')
         }
+      })
+    },
+    remoteMethod(keyword) {
+      getDeptsInfo(keyword).then(Response => {
+        this.option.dept = []
+        const { data } = Response
+        data.forEach(item => {
+          this.option.dept.push(
+            {
+              value: item.deptCode,
+              label: item.deptName
+            })
+        })
       })
     }
   }

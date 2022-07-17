@@ -2,18 +2,20 @@ import request from '@/utils/request'
 
 export function getDeptInfo(deptCode) {
   return request({
-    url: '/api/common/department/getDeptInfo',
-    method: 'post',
-    data: {
-      deptCode: deptCode
-    }
+    baseURL: 'http://172.16.100.252',
+    url: '/api/common/department/getInfo',
+    method: 'get',
+    params: { deptCode }
   })
 }
 
-export function getDeptsInfo(data) {
+export function getDeptsInfo(keyword) {
   return request({
-    url: '/api/common/department/getDeptsInfo',
+    baseURL: 'http://172.16.100.252',
+    url: '/api/common/department/getInfos',
     method: 'post',
-    data
+    data: {
+      keyword: keyword
+    }
   })
 }
