@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function login(data) {
   return request({
     baseURL: 'http://172.16.100.252',
-    url: '/api/user/login',
+    url: '/api/user/signIn',
     method: 'post',
     data
   })
@@ -12,7 +12,7 @@ export function login(data) {
 export function getInfo() {
   return request({
     baseURL: 'http://172.16.100.252',
-    url: '/api/user/info',
+    url: '/api/user/getInfo',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getInfo() {
 export function logout() {
   return request({
     baseURL: 'http://172.16.100.252',
-    url: '/api/user/logout',
+    url: '/api/user/signOut',
     method: 'post'
   })
 }

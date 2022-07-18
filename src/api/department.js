@@ -12,7 +12,7 @@ export function getDeptInfo(deptCode) {
 export function getDeptsInfo(keyword) {
   return request({
     baseURL: 'http://172.16.100.252',
-    url: '/api/common/department/getInfos',
+    url: '/api/common/department/fetchInfos',
     method: 'post',
     data: {
       keyword: keyword
