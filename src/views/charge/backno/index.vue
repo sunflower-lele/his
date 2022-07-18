@@ -2,16 +2,17 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="6" :xs="24">
-        <inpatient-card :data="patient" @click="dialogVisible = true" />
+        <out-patient-card :data="patient" @click="dialogVisible = true" />
+      </el-col>
+      <el-col :span="18" :xs="24">
+        <register-table ref="dataTable" :patient="patient.patientNo" />
       </el-col>
     </el-row>
 
     <!-- 会话 -->
-    <el-dialog title="输入住院号" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="输入卡号" :visible.sync="dialogVisible" width="30%">
       <div style="margin-left: 80px; margin-right: 80px">
-        <el-input v-model="dialogResult" placeholder="请输入住院号">
-          <template slot="prepend">ZY01000</template>
-        </el-input>
+        <el-input v-model="dialogResult" placeholder="请输入卡号" />
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="handleDialogConfirm">
@@ -23,14 +24,16 @@
 </template>
 
 <script>
-import InpatientCard from '@/components/Cards/InpatientCard.vue'
+import outPatientCard from '@/components/Cards/outPatientCard.vue'
+import registerTable from './components/registerTable.vue'
 
 import { getInpatientInfo, getPatientInfo } from '@/api/patient'
 import { getDeptInfo } from '@/api/department'
 
 export default {
   components: {
-    InpatientCard
+    outPatientCard,
+    registerTable
   },
   data() {
     return {

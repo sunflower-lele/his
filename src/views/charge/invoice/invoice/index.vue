@@ -19,9 +19,9 @@
         <el-table-column label="发票类型" prop="invoice_type" />
         <el-table-column align="center" width="360" label="操作" prop="action">
           <template>
-            <el-button type="primary" @click="handleUpdate">{{ '更新打印标记' }}</el-button>
-            <el-button type="success" @click="fillOpen">{{ '补开' }}</el-button>
-            <el-button type="danger" @click="handleRush">{{ '冲红' }}</el-button>
+            <el-button type="primary" @click="handleUpdate">更新打印标记</el-button>
+            <el-button type="success" @click="fillOpen">补开</el-button>
+            <el-button type="danger" @click="handleRush">冲红</el-button>
           </template>
         </el-table-column>
       </el-table>

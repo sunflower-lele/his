@@ -1,5 +1,5 @@
 <template>
-  <el-card style="border-radius: 10px">
+  <el-card style="border-radius: 10px; margin-left: 20px; margin-top: 20px">
     <div slot="header" class="clearfix">
       <span>门诊患者</span>
       <el-button
