@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <el-row :gutter="20">
-      <el-col :span="12" :xs="24">
+      <el-col :span="8" :xs="24">
         <log-data-table ref="dataTable" />
       </el-col>
 
-      <el-col :span="12" :xs="24">
+      <el-col :span="8" :xs="24">
         <pool-data-table ref="dataTable" />
       </el-col>
     </el-row>
@@ -15,6 +15,7 @@
 <script>
 import LogDataTable from './components/LogDataTable.vue'
 import PoolDataTable from './components/PoolDataTable.vue'
+import myBus from './js/myBus.js'
 
 export default {
   components: {
@@ -24,6 +25,9 @@ export default {
   data() {
     return {
     }
+  },
+  mounted() {
+    myBus.$emit('refresh', null)
   }
 }
 </script>
