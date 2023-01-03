@@ -13,7 +13,7 @@ const informationRouter = {
     {
       path: 'report',
       meta: { title: '报表' },
-      component: () => import('@/views/anesthesia/report/surgery/index')
+      component: () => import('@/views/information/index')
     }
   ]
 }
