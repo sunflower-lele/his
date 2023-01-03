@@ -35,3 +35,14 @@ export function addFeature(feature, count) {
     }
   })
 }
+
+export function raffleList(names) {
+  return request({
+    url: '/api/tool/raffle/raffleList',
+    method: 'post',
+    baseURL: 'http://172.16.100.252',
+    data: {
+      names: names
+    }
+  })
+}
