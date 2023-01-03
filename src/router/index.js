@@ -15,6 +15,7 @@ import medicalRouter from './modules/medical'
 import chargeRouter from './modules/charge'
 import userRouter from './modules/user'
 import anesthesiaRouter from './modules/anesthesia'
+import informationRouter from './modules/information'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -384,6 +385,7 @@ export const asyncRoutes = [
   chargeRouter,
   userRouter,
   anesthesiaRouter,
+  informationRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
