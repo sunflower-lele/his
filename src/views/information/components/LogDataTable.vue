@@ -6,7 +6,7 @@
 
     <!-- 数据表 -->
     <el-table
-      :data="tableData"
+      :data="logData"
       height="700px"
       :row-class-name="tableRowClassName"
     >
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import myBus from '../js/myBus.js'
+
 export default {
   props: {
     patient: {
@@ -56,11 +58,19 @@ export default {
   },
   data() {
     return {
-      tableData: [], // 表数据
+      logData: [], // 表数据
+      poolData: [], // 奖池数据
       name: '' // 单抽人员姓名
     }
   },
+  mounted() {
+    // 奖池更新
+    myBus.$on('poolUpdate', poolData => {
+      this.poolData = poolData
+    })
+  },
   methods: {
+    // 隔行着色
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex % 2 === 0) {
         return 'success-row'
@@ -69,6 +79,8 @@ export default {
     onClick() {
       if (this.name === '') {
         this.$alert('姓名不能为空！')
+      } else if (this.poolData.length === 0) {
+        this.$alert('奖池中已无奖品！')
       } else {
         this.addItem(this.name)
       }
@@ -83,11 +95,19 @@ export default {
         this.$message('执行删除完成')
       })
     },
+    // 分发一次奖品
     addItem(name) {
-      this.tableData.push({ name: name, feature: 'test' })
+      // 生成随机数
+      var idx = Math.floor(Math.random() * this.poolData.length)
+
+      // 获取奖品
+      var item = this.poolData[idx]
+
+      this.logData.push({ name: name, feature: item.feature })
     },
+    // 回收一次奖品
     deleteItem(index) {
-      this.tableData.splice(index, 1)
+      //   this.logData.splice(index, 1)
     }
   }
 }

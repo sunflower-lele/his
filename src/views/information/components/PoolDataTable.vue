@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import myBus from '../js/myBus.js'
+
 export default {
   props: {
     patient: {
@@ -73,6 +75,7 @@ export default {
     },
     addItem(feature, count) {
       this.tableData.push({ feature: feature, count: count })
+      myBus.$emit('poolUpdate', this.tableData)
     }
   }
 }
