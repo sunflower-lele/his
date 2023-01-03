@@ -39,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    // 奖池更新
+    // 日志更新
     myBus.$on('refresh', _ => {
       queryRaffleLogs().then(Response => {
         const { data } = Response

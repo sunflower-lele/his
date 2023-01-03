@@ -23,3 +23,15 @@ export function cancelAll() {
     baseURL: 'http://172.16.100.252'
   })
 }
+
+export function addFeature(feature, count) {
+  return request({
+    url: '/api/tool/raffle/addFeature',
+    method: 'post',
+    baseURL: 'http://172.16.100.252',
+    data: {
+      feature: feature,
+      count: count
+    }
+  })
+}

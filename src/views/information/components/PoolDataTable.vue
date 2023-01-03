@@ -16,10 +16,10 @@
     </el-table>
 
     <!-- 下标 -->
-    <div style="margin-top: 10px">
+    <div style="margin-top: 10px; text-align: center">
       <el-row :gutter="20">
         <!-- 输入框 -->
-        <el-col :span="15" :xs="24">
+        <el-col :span="12" :xs="24">
           <el-input
             v-model="feature"
             placeholder="请输入奖品"
@@ -27,14 +27,16 @@
             clearable="true"
           />
         </el-col>
-        <el-col :span="5" :xs="24">
+        <el-col :span="7" :xs="24">
           <el-input v-model="count" placeholder="请输入数量">
             <template slot="prepend">数量</template>
           </el-input>
         </el-col>
         <!-- 按钮 -->
-        <el-col :span="4" :xs="24">
-          <el-button type="success" @click="onClick">添加奖品</el-button>
+        <el-col :span="5" :xs="24">
+          <el-button type="success" :loading="loading" @click="addFeature">
+            添加奖品
+          </el-button>
         </el-col>
       </el-row>
     </div>
@@ -43,39 +45,42 @@
 
 <script>
 import myBus from '../js/myBus.js'
+import { queryFeaturePool, addFeature } from '@/api/Raffle.js'
 
 export default {
-  props: {
-    patient: {
-      type: String,
-      default: _ => { return '' }
-    }
-  },
   data() {
     return {
       tableData: [], // 表数据
-      feature: '', // 单抽人员姓名
-      count: 1
+      feature: '', // 奖品名称
+      count: 1, // 奖品数量
+      loading: false // 加载
     }
   },
+  mounted() {
+    // 奖池更新
+    myBus.$on('refresh', _ => {
+      queryFeaturePool().then(Response => {
+        const { data } = Response
+        this.tableData = data
+      })
+    })
+  },
   methods: {
+    // 隔行着色
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex % 2 === 0) {
         return 'success-row'
       }
     },
-    onClick() {
-      if (this.feature.length === 0) {
-        this.$alert('奖品不能为空！')
-      } else if (this.count === 0 || this.count.length === 0) {
-        this.$alert('奖品数量不能为空！')
-      } else {
-        this.addItem(this.feature, this.count)
-      }
-    },
-    addItem(feature, count) {
-      this.tableData.push({ feature: feature, count: count })
-      myBus.$emit('poolUpdate', this.tableData)
+    // 添加奖品
+    addFeature() {
+      this.loading = true
+      addFeature(this.feature, this.count).then(_ => {
+        myBus.$emit('refresh', null)
+        this.loading = false
+      }).catch(_ => {
+        this.loading = false
+      })
     }
   }
 }
