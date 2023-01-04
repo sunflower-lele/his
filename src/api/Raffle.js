@@ -36,6 +36,17 @@ export function addFeature(feature, count) {
   })
 }
 
+export function raffleOnce(name) {
+  return request({
+    url: '/api/tool/raffle/raffleOnce',
+    method: 'post',
+    baseURL: 'http://172.16.100.252',
+    data: {
+      name: name
+    }
+  })
+}
+
 export function raffleList(names) {
   return request({
     url: '/api/tool/raffle/raffleList',

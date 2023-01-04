@@ -12,7 +12,7 @@ const informationRouter = {
   children: [
     {
       path: 'report',
-      meta: { title: '报表' },
+      meta: { title: '抽奖' },
       component: () => import('@/views/information/index')
     }
   ]

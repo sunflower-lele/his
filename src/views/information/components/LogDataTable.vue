@@ -18,25 +18,41 @@
     </el-table>
 
     <!-- 下标 -->
-    <div style="margin-top: 10px">
-      <div style="text-align: center">
-        <el-button type="success" :loading="loading" @click="cancelAll">
-          归还所有奖品
-        </el-button>
-      </div>
+    <div style="margin-top: 10px; text-align: center">
+      <el-row :gutter="20">
+        <!-- 输入框 -->
+        <el-col :span="14" :xs="24">
+          <el-input
+            v-model="name"
+            placeholder="请输入姓名"
+            suffix-icon="el-icon-edit"
+          />
+        </el-col>
+        <!-- 按钮 -->
+        <el-col :span="4" :xs="24">
+          <el-button type="success" @click="raffleOnce">单抽</el-button>
+        </el-col>
+        <!-- 归还按钮 -->
+        <el-col :span="6" :xs="24">
+          <el-button type="success" :loading="loading" @click="cancelAll">
+            归还所有奖品
+          </el-button>
+        </el-col>
+      </el-row>
     </div>
   </el-card>
 </template>
 
 <script>
 import myBus from '../js/myBus.js'
-import { queryRaffleLogs, cancelAll } from '@/api/Raffle.js'
+import { queryRaffleLogs, raffleOnce, cancelAll } from '@/api/Raffle.js'
 
 export default {
   data() {
     return {
       tableData: [], // 表数据
-      loading: false
+      loading: false, // 加载
+      name: '' // 抽奖人
     }
   },
   mounted() {
@@ -57,6 +73,16 @@ export default {
       if (rowIndex % 2 === 0) {
         return 'success-row'
       }
+    },
+    // 单抽
+    raffleOnce() {
+      this.loading = true
+      raffleOnce(this.name).then(_ => {
+        myBus.$emit('refresh', null)
+        this.loading = false
+      }).catch(_ => {
+        this.loading = false
+      })
     },
     // 归还
     cancelAll() {
