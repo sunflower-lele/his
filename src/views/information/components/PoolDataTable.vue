@@ -1,7 +1,7 @@
 <template>
   <el-card style="border-radius: 10px">
     <div slot="header" class="clearfix">
-      <span>奖品池</span>
+      <span>奖品池 (剩余 {{ remain }} 个)</span>
     </div>
 
     <!-- 数据表 -->
@@ -53,7 +53,8 @@ export default {
       tableData: [], // 表数据
       feature: '', // 奖品名称
       count: 1, // 奖品数量
-      loading: false // 加载
+      loading: false, // 加载
+      remain: 0
     }
   },
   mounted() {
@@ -62,6 +63,10 @@ export default {
       queryFeaturePool().then(Response => {
         const { data } = Response
         this.tableData = data
+        this.remain = 0
+        this.tableData.forEach(x => {
+          this.remain += x.count
+        })
       })
     })
   },

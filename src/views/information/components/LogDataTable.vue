@@ -6,6 +6,7 @@
 
     <!-- 数据表 -->
     <el-table
+      ref="logTable"
       :data="tableData"
       height="700px"
       :row-class-name="tableRowClassName"
@@ -44,6 +45,9 @@ export default {
       queryRaffleLogs().then(Response => {
         const { data } = Response
         this.tableData = data
+      }).then(_ => {
+        var tbl = this.$refs.logTable.bodyWrapper
+        tbl.scrollTop = tbl.scrollHeight
       })
     })
   },
