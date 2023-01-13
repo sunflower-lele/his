@@ -13,8 +13,15 @@
     >
       <el-table-column type="index" width="50" />
       <el-table-column v-if="false" prop="key" label="主键" />
-      <el-table-column prop="name" label="姓名" width="200" />
+      <el-table-column prop="name" label="姓名" width="100" />
       <el-table-column prop="feature" label="奖品" />
+      <el-table-column label="操作" width="100">
+        <template slot-scope="scope">
+          <el-button size="mini" type="danger" @click="cancel(scope.row)">
+            退还奖品
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 下标 -->
@@ -45,7 +52,7 @@
 
 <script>
 import myBus from '../js/myBus.js'
-import { queryRaffleLogs, raffleOnce, cancelAll } from '@/api/Raffle.js'
+import { queryRaffleLogs, raffleOnce, cancel, cancelAll } from '@/api/raffle.js'
 
 export default {
   data() {
@@ -81,6 +88,14 @@ export default {
         myBus.$emit('refresh', null)
         this.loading = false
       }).catch(_ => {
+        this.loading = false
+      })
+    },
+    // 退还单个
+    cancel(row) {
+      this.loading = true
+      cancel(row.key).then(_ => {
+        myBus.$emit('refresh', null)
         this.loading = false
       })
     },

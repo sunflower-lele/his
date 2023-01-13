@@ -43,7 +43,6 @@ export default {
       devPoolTitle: '开发人员',
       devPoolNames: [
         '覃鹏展',
-        '杨海波',
         '赵庆中',
         '汪富康',
         '庄屹东'

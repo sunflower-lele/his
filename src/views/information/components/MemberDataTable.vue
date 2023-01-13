@@ -25,7 +25,7 @@
 
 <script>
 import myBus from '../js/myBus.js'
-import { raffleList } from '@/api/Raffle.js'
+import { raffleList } from '@/api/raffle.js'
 
 export default {
   props: {

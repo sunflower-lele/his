@@ -45,7 +45,7 @@
 
 <script>
 import myBus from '../js/myBus.js'
-import { queryFeaturePool, addFeature } from '@/api/Raffle.js'
+import { queryFeaturePool, addFeature } from '@/api/raffle.js'
 
 export default {
   data() {

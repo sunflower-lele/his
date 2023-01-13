@@ -16,6 +16,17 @@ export function queryFeaturePool() {
   })
 }
 
+export function cancel(key) {
+  return request({
+    url: '/api/tool/raffle/cancel',
+    method: 'post',
+    baseURL: 'http://172.16.100.252',
+    data: {
+      key: key
+    }
+  })
+}
+
 export function cancelAll() {
   return request({
     url: '/api/tool/raffle/cancelAll',
