@@ -29,11 +29,14 @@
       <el-row :gutter="20">
         <!-- 输入框 -->
         <el-col :span="14" :xs="24">
-          <el-input
-            v-model="name"
-            placeholder="请输入姓名"
-            suffix-icon="el-icon-edit"
-          />
+          <el-select v-model="name" filterable placeholder="请选择人员" style="width: 100%">
+            <el-option
+              v-for="item in options"
+              :key="item.label"
+              :label="item.label"
+              :value="item.label"
+            />
+          </el-select>
         </el-col>
         <!-- 按钮 -->
         <el-col :span="4" :xs="24">
@@ -55,14 +58,24 @@ import myBus from '../js/myBus.js'
 import { queryRaffleLogs, raffleOnce, cancel, cancelAll } from '@/api/raffle.js'
 
 export default {
+  props: {
+    names: {
+      type: Array,
+      default: _ => { return [] }
+    }
+  },
   data() {
     return {
       tableData: [], // 表数据
       loading: false, // 加载
-      name: '' // 抽奖人
+      name: '', // 抽奖人
+      options: [] // 抽奖人清单
     }
   },
   mounted() {
+    // 加载单抽列表
+    this.options = this.names.map(x => { return { label: x } })
+
     // 日志更新
     myBus.$on('refresh', _ => {
       queryRaffleLogs().then(Response => {

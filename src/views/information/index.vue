@@ -2,7 +2,7 @@
   <div class="container">
     <el-row :gutter="20">
       <el-col :span="8" :xs="24">
-        <log-data-table ref="dataTable" />
+        <log-data-table ref="dataTable" :names="allPoolNames" />
       </el-col>
 
       <el-col :span="8" :xs="24">
