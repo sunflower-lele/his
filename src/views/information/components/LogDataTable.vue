@@ -29,7 +29,7 @@
       <el-row :gutter="20">
         <!-- 输入框 -->
         <el-col :span="14" :xs="24">
-          <el-select v-model="name" filterable placeholder="请选择人员" style="width: 100%">
+          <el-select v-model="name" filterable allow-create placeholder="请选择人员" style="width: 100%">
             <el-option
               v-for="item in options"
               :key="item.label"
