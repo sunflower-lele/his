@@ -11,7 +11,16 @@
       :row-class-name="tableRowClassName"
     >
       <el-table-column type="index" width="50" />
-      <el-table-column prop="name" label="成员" />
+      <el-table-column prop="name" label="成员" width="100" />
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.state"
+            active-text="参与抽奖"
+            inactive-text="不参与抽奖"
+          />
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 下标 -->
@@ -45,7 +54,7 @@ export default {
     }
   },
   mounted() {
-    this.tableData = this.names.map(x => { return { name: x } })
+    this.tableData = this.names.map(x => { return { name: x, state: true } })
   },
   methods: {
     // 隔行着色
@@ -56,8 +65,17 @@ export default {
     },
     // 批量抽奖
     raffleList() {
+      // 提取最终名单
+      var names = this.tableData.map(x => {
+        if (x.state === true) {
+          return x.name
+        } else {
+          return null
+        }
+      }).filter(x => { return x != null })
+
       this.loading = true
-      raffleList(this.names).then(_ => {
+      raffleList(names).then(_ => {
         myBus.$emit('refresh', null)
         this.loading = false
       }).catch(_ => {

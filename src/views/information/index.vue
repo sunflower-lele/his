@@ -49,6 +49,10 @@ export default {
       ],
       allPoolTitle: '科室成员',
       allPoolNames: [
+        '刘晓东',
+        '刘洋',
+        '朱旭玮',
+        '张智慧',
         '潘学杰',
         '潘长虹',
         '陈宁',
