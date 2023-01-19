@@ -23,6 +23,8 @@
         />
       </el-col>
     </el-row>
+
+    <raffle-view />
   </div>
 </template>
 
@@ -30,13 +32,15 @@
 import LogDataTable from './components/LogDataTable.vue'
 import PoolDataTable from './components/PoolDataTable.vue'
 import MemberDataTable from './components/MemberDataTable.vue'
+import RaffleView from './dialog/RaffleView.vue'
 import myBus from './js/myBus.js'
 
 export default {
   components: {
     LogDataTable,
     PoolDataTable,
-    MemberDataTable
+    MemberDataTable,
+    RaffleView
   },
   data() {
     return {
@@ -90,7 +94,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style language="scss" scoped>
 .container {
   padding: 20px;
 }
