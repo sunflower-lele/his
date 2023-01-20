@@ -1,37 +1,51 @@
 <template>
-  <el-card class="myCard">
-    <div class="content">{{ feature }}</div>
-    <el-divider />
-    <div class="title">{{ name }}</div>
+  <el-card class="raffle-card">
+    <el-container>
+      <el-header class="v-center">次序 {{ idx + 1 }}</el-header>
+      <el-main>
+        <mini-card :idx="idx" :feature="feature" />
+      </el-main>
+      <el-footer class="v-center">
+        <div>{{ name }}</div>
+      </el-footer>
+    </el-container>
   </el-card>
 </template>
 
 <script>
+import MiniCard from './MiniCard.vue'
+
 export default {
+  components: {
+    MiniCard
+  },
   props: {
+    idx: {
+      type: Number,
+      default: -1
+    },
     feature: {
       type: String,
-      default: '123'
+      default: '啥也没抽到呀o(╥﹏╥)o'
     },
     name: {
       type: String,
-      default: '覃鹏展'
+      default: '匿名(^_-)☆'
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.myCard {
-  border-radius: 10px;
+.raffle-card {
+  text-align: center;
+  height: 100%;
+  background-color: transparent;
 }
 
-.myCard .content {
-  text-align: center;
-  height: 200px;
-}
-
-.myCard .title {
-  text-align: center;
+.v-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
